@@ -1,0 +1,7 @@
+NORTHSTAR BANK — INTERNAL SUPPORT NOTE (SYNTHETIC)
+
+Several test users say that after an internal transfer times out, retrying it may reduce the checking balance twice. One person says they saw two confirmation references. We do not yet know whether this is an API retry, a client double-submit, or a display issue.
+
+Please investigate the current service and tests before deciding what happened. Use the same retry key when reproducing a retry. Do not add persistence or change unrelated account behavior for this exercise.
+
+All account IDs and amounts in this workshop are fictional. This brief is not an incident report about a real bank.

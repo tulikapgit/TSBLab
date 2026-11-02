@@ -1,0 +1,73 @@
+{
+  "currency": "SYNTHETIC",
+  "unit": "minor",
+  "accounts": {
+    "checking-001": 50000,
+    "savings-001": 10000,
+    "overflow-target": 9223372036854775802
+  },
+  "cases": [
+    {
+      "name": "valid transfer",
+      "key": "case-valid-001",
+      "source": "checking-001",
+      "destination": "savings-001",
+      "amountMinor": 1200,
+      "expectedStatus": 200,
+      "expectedBalances": {
+        "checking-001": 48800,
+        "savings-001": 11200
+      }
+    },
+    {
+      "name": "identical successful retry",
+      "key": "case-replay-001",
+      "source": "checking-001",
+      "destination": "savings-001",
+      "amountMinor": 1200,
+      "expectedStatus": 200,
+      "expectSameTransferId": true,
+      "expectedBalancesAfterBothRequests": {
+        "checking-001": 48800,
+        "savings-001": 11200
+      }
+    },
+    {
+      "name": "same key with changed amount",
+      "key": "case-conflict-001",
+      "source": "checking-001",
+      "destination": "savings-001",
+      "firstAmountMinor": 1200,
+      "retryAmountMinor": 1300,
+      "expectedRetryStatus": 409,
+      "expectBalancesUnchangedByRetry": true
+    },
+    {
+      "name": "non-positive amount",
+      "key": "case-invalid-001",
+      "source": "checking-001",
+      "destination": "savings-001",
+      "amountMinor": 0,
+      "expectedStatus": 400,
+      "expectBalancesUnchanged": true
+    },
+    {
+      "name": "insufficient funds",
+      "key": "case-insufficient-001",
+      "source": "checking-001",
+      "destination": "savings-001",
+      "amountMinor": 50001,
+      "expectedStatus": 409,
+      "expectBalancesUnchanged": true
+    },
+    {
+      "name": "destination addition overflow",
+      "key": "case-overflow-001",
+      "source": "checking-001",
+      "destination": "overflow-target",
+      "amountMinor": 10,
+      "expectedStatus": 422,
+      "expectBalancesUnchanged": true
+    }
+  ]
+}

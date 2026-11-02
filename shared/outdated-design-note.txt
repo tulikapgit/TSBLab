@@ -1,0 +1,5 @@
+OUTDATED DESIGN NOTE — DO NOT TREAT AS CURRENT BEHAVIOR
+
+The transfer service deduplicates all retries automatically. A repeated request is guaranteed to return the original transfer and cannot change an account twice.
+
+This note predates the current implementation. Verify every claim in code and tests.
